@@ -23,7 +23,7 @@ When the vendor publishes the chart to GitHub Pages (or another HTTPS Helm repo)
 helm repo add sre-ai https://sandeep27choudhary.github.io/rag-k8s-llm
 helm repo update
 helm install sre-ai sre-ai/sre-ai-platform -n sre-ai --create-namespace \
-  -f examples/values-customer.yaml \
+  -f examples/values-example.yaml \
   --set-string config.jwtSecretKey="$(openssl rand -hex 32)" \
   --set-string config.postgresPassword="$(openssl rand -hex 16)" \
   --set-string config.sreAdminPassword="$(openssl rand -base64 24)" \
@@ -31,7 +31,7 @@ helm install sre-ai sre-ai/sre-ai-platform -n sre-ai --create-namespace \
   --set license.trialDays=7
 ```
 
-Replace `examples/values-customer.yaml` with your path after copying it locally.  
+Replace `examples/values-example.yaml` with your path after copying it locally. For paid production installs, add `-f examples/values-production.yaml` (or merge its settings) and set `license.key`.  
 Edit `license.key` and `license.publicKey` in values when your vendor supplies them (see **License** below).
 
 If the Helm repo URL differs, check with your vendor.
@@ -101,13 +101,13 @@ kubectl port-forward -n sre-ai svc/api 8000:8000
 curl -sS http://localhost:8000/license
 ```
 
-Open `http://localhost:3001` for the platform UI. Default admin credentials must be set in your values (see `examples/values-customer.yaml`); do **not** use `CHANGEME` in production.
+Open `http://localhost:3001` for the platform UI. Default admin credentials must be set in your values (see `examples/values-example.yaml`); do **not** use `CHANGEME` in production.
 
 ---
 
 ## Images
 
-First-party images are published to **GHCR** under `ghcr.io/sandeep27choudhary/sre-agent-*` (see `examples/values-customer.yaml`). If pulls fail with `unauthorized`, the packages may be private — ask your vendor for pull credentials or for packages to be public.
+First-party images are published to **GHCR** under `ghcr.io/sandeep27choudhary/sre-agent-*` (see `examples/values-example.yaml`). If pulls fail with `unauthorized`, the packages may be private — ask your vendor for pull credentials or for packages to be public.
 
 ---
 
